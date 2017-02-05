@@ -4,7 +4,9 @@ exports.signup = function(request, response, next) {
     const email = request.body.email;
     const password = request.body.password;
 
-    console.log(request.body);
+    if (!email || !password) {
+        response.status(422).send({ error: 'Email and Password are obligatory fields.'});
+    }
 
     User.findOne({ email: email }, function(err, existingUser){
         if (err) { return next(err); }
